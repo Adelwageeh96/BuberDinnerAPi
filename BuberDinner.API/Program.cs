@@ -1,7 +1,7 @@
-
+using BuberDinner.API.Common.Errors;
 using BuberDinner.Application;
-using BuberDinner.Application.Services.Authentication;
 using BuberDinner.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace BuberDinner.API
 {
@@ -18,6 +18,8 @@ namespace BuberDinner.API
                 builder.Services.AddControllers();
                 builder.Services.AddEndpointsApiExplorer();
                 builder.Services.AddSwaggerGen();
+
+                builder.Services.AddSingleton<ProblemDetailsFactory,BuberDinnerProblemDetailsFactory>();
             }
 
 
@@ -30,6 +32,7 @@ namespace BuberDinner.API
                     app.UseSwaggerUI();
                 }
 
+                app.UseExceptionHandler("/error");
                 app.UseHttpsRedirection();
 
                 app.UseAuthorization();
